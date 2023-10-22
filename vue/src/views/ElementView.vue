@@ -9,6 +9,27 @@
 <!--      </el-col>-->
 <!--    </el-row>-->
 
+    <el-menu router style="border: none" :default-active="$route.path">
+      <el-menu-item index="/">
+        <template slot="title">
+          <i class="el-icon-house"></i>
+          <span>Home Page</span>
+        </template>
+      </el-menu-item>
+
+      <el-menu-item index="/element">
+        Element Page
+      </el-menu-item>
+
+      <el-submenu>
+        <template slot="title">
+          <i class="el-icon-menu"></i>
+          <span>Info Management</span>
+        </template>
+        <el-menu-item>User Information</el-menu-item>
+      </el-submenu>
+    </el-menu>
+
       <el-row>
         <el-col>
           <el-input style="width: 200px" v-model="value"></el-input>
