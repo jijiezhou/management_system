@@ -41,4 +41,16 @@ public class UserService {
     public List<User> selectAll() {
         return userMapper.selectAll();
     }
+
+    public User selectById(Integer id) {
+        return userMapper.selectById(id);
+    }
+
+    public List<User> selectByName(String name) {
+        return userMapper.selectByName(name);
+    }
+
+    public List<User> selectByMore(String username, String name) {
+        return userMapper.selectByMore(username, name);
+    }
 }

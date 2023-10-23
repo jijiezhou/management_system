@@ -74,4 +74,31 @@ public class UserController {
         List<User> userList = userService.selectAll();
         return Result.success(userList);
     }
+
+    /**
+     * select user info by id
+     */
+    @GetMapping("/selectById/{id}")
+    public Result selectById(@PathVariable Integer id) {
+        User user = userService.selectById(id);
+        return Result.success(user);
+    }
+
+    /**
+     * select user info by name
+     */
+    @GetMapping("/selectByName/{name}")
+    public Result selectByName(@PathVariable String name) {
+        List<User> userList = userService.selectByName(name);
+        return Result.success(userList);
+    }
+
+    /**
+     * select user info by more
+     */
+    @GetMapping("/selectByMore")
+    public Result selectByMore(@RequestParam String username, @RequestParam String name) {
+        List<User> userList = userService.selectByMore(username, name);
+        return Result.success(userList);
+    }
 }

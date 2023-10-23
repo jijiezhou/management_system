@@ -29,4 +29,13 @@ public interface UserMapper {
 
     @Select("select * from `user` order by id desc")
     List<User> selectAll();
+
+    @Select("select * from `user` where id = #{id} order by id desc")
+    User selectById(Integer id);
+
+    @Select("select * from `user` where name = #{name} order by id desc")
+    List<User> selectByName(String name);
+
+    @Select("select * from `user` where username = #{username} and name = #{name} order by id desc")
+    List<User> selectByMore(@Param("username") String username, @Param("name") String name);
 }
