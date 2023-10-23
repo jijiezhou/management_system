@@ -21,6 +21,7 @@ public class WebController {
 
     @PostMapping("/post") //http://localhost:9090/web/post?name=jijiez need url params
     public Result post(@RequestBody Obj obj){
+        System.out.println(obj.getName() == null ? "null" : obj.getName().isEmpty());
         return Result.success(obj);
     }
 
