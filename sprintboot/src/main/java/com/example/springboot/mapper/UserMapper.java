@@ -1,9 +1,9 @@
 package com.example.springboot.mapper;
 
 import com.example.springboot.entity.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 /**
  * @Classname UserMapper
@@ -20,4 +20,13 @@ public interface UserMapper {
     @Update("update `user` set username = #{username}, password = #{password}, name = #{name}, phone = #{phone}, " +
             "email = #{email}, address = #{address}, avatar = #{avatar} where id = #{id}")
     void updateUser(User user);
+
+    @Delete("delete from `user` where id = #{id}")
+    void deleteUser(Integer id);
+
+    @Delete("delete from `user` where id in ()")
+    void batchDeleteUsers(List<Integer> ids);
+
+    @Select("select * from `user` order by id desc")
+    List<User> selectAll();
 }

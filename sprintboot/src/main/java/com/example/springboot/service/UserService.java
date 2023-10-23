@@ -6,6 +6,8 @@ import com.example.springboot.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Classname UserService
  * @Description TODO
@@ -23,5 +25,20 @@ public class UserService {
 
     public void updateUser(User user){
         userMapper.updateUser(user);
+    }
+
+    public void deleteUser(Integer id) {
+        userMapper.deleteUser(id);
+    }
+
+    public void batchDeleteUsers(List<Integer> ids) {
+        for (Integer id: ids){
+            userMapper.deleteUser(id);
+        }
+
+    }
+
+    public List<User> selectAll() {
+        return userMapper.selectAll();
     }
 }
