@@ -1,5 +1,6 @@
 package com.example.springboot.controller;
 
+import com.example.springboot.common.Page;
 import com.example.springboot.common.Result;
 import com.example.springboot.entity.User;
 import com.example.springboot.service.UserService;
@@ -8,7 +9,9 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Classname UserController
@@ -100,5 +103,28 @@ public class UserController {
     public Result selectByMore(@RequestParam String username, @RequestParam String name) {
         List<User> userList = userService.selectByMore(username, name);
         return Result.success(userList);
+    }
+
+    /**
+     * select user info by vague
+     */
+    @GetMapping("/selectByVague")
+    public Result selectByVague(@RequestParam String username, @RequestParam String name) {
+        List<User> userList = userService.selectByVague(username, name);
+        return Result.success(userList);
+    }
+
+    /**
+     * select user info by page
+     * pageNum: page number
+     * pageSize: how many columns in one page
+     */
+    @GetMapping("/selectByPage")
+    public Result selectByPage(@RequestParam Integer pageNum,
+                               @RequestParam Integer pageSize,
+                               @RequestParam String username,
+                               @RequestParam String name) {
+        Page<User> pageMap = userService.selectByPage(pageNum, pageSize, username, name);
+        return Result.success(pageMap);
     }
 }

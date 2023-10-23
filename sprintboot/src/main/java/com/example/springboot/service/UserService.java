@@ -1,12 +1,15 @@
 package com.example.springboot.service;
 
+import com.example.springboot.common.Page;
 import com.example.springboot.common.Result;
 import com.example.springboot.entity.User;
 import com.example.springboot.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Classname UserService
@@ -52,5 +55,20 @@ public class UserService {
 
     public List<User> selectByMore(String username, String name) {
         return userMapper.selectByMore(username, name);
+    }
+
+    public List<User> selectByVague(String username, String name) {
+        return userMapper.selectByVague(username, name);
+    }
+
+    public Page<User> selectByPage(Integer pageNum, Integer pageSize, String username, String name) {
+        Integer skipNum = (pageNum - 1) * pageSize;
+
+        Page<User> page = new Page<>();
+        List<User> userList = userMapper.selectByPage(skipNum, pageSize, username, name);
+        Integer total = userMapper.selectCountByPage(username, name);
+        page.setList(userList);
+        page.setTotal(total);
+        return page;
     }
 }
