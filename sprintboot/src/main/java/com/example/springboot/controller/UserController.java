@@ -4,10 +4,10 @@ import com.example.springboot.common.Result;
 import com.example.springboot.entity.User;
 import com.example.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.SQLException;
 
 /**
  * @Classname UserController
@@ -25,7 +25,24 @@ public class UserController {
      */
     @PostMapping("/add")
     public Result add(@RequestBody User user){
-        userService.insertUser(user);
+        try{
+            userService.insertUser(user);
+        } catch (Exception e){
+            if (e instanceof DuplicateKeyException){
+                return Result.error("Insert Database Error");
+            }else{
+                return Result.error("Internal Fault");
+            }
+        }
+        return Result.success();
+    }
+
+    /**
+     * update user info
+     */
+    @PutMapping("/update")
+    public Result update(@RequestBody User user){
+        userService.updateUser(user);
         return Result.success();
     }
 }

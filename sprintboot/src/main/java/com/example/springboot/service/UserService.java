@@ -20,4 +20,8 @@ public class UserService {
     public void insertUser(User user){
         userMapper.insert(user);
     }
+
+    public void updateUser(User user){
+        userMapper.updateUser(user);
+    }
 }
