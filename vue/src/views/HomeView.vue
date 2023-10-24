@@ -8,24 +8,22 @@
           <span class="logo-title" v-show="!isCollapse">Management</span>
         </div>
 
-        <el-menu :collapse="isCollapse" :collapse-transition="false" router background-color="#001529" text-color="rgba(255, 255, 255, 0.65)" active-text-color="#fff" style="border: none" :default-active="$route.path">
+        <el-menu :collapse="isCollapse" :collapse-transition="false" router background-color="#001529"
+                 text-color="rgba(255, 255, 255, 0.65)" active-text-color="#fff" style="border: none"
+                 :default-active="$route.path">
           <el-menu-item index="/">
-              <i class="el-icon-house"></i>
-              <span slot="title">Home Page</span>
+            <i class="el-icon-house"></i>
+            <span slot="title">Home Page</span>
           </el-menu-item>
 
           <el-menu-item index="/1">
-            <template slot="title">
-              <i class="el-icon-house"></i>
-              <span>Home Page</span>
-            </template>
+            <i class="el-icon-house"></i>
+            <span slot="title">Home Page</span>
           </el-menu-item>
 
           <el-menu-item index="/2">
-            <template slot="title">
-              <i class="el-icon-house"></i>
-              <span>Home Page</span>
-            </template>
+            <i class="el-icon-house"></i>
+            <span slot="title">Home Page</span>
           </el-menu-item>
 
           <el-submenu index="/3">
@@ -70,22 +68,40 @@
           <div style="box-shadow: 0 0 10px rgba(0,0,0,.1); padding: 10px 20px; border-radius: 5px; margin-bottom: 10px">
             Hello Vue Management System！
           </div>
-          <el-card style="width: 500px">
-            <div slot="header" class="clearfix">
-              <span>SpringBoot + Vue Management System</span>
-            </div>
-            <div>
-              Start to do Management System
-              <div style="margin-top: 20px">
-                <div style="margin: 10px 0"><strong>theme color</strong></div>
-                <el-button type="primary">button</el-button>
-                <el-button type="success">button</el-button>
-                <el-button type="warning">button</el-button>
-                <el-button type="danger">button</el-button>
-                <el-button type="info">button</el-button>
+
+          <div style="display: flex">
+            <el-card style="width: 50%; margin-right: 10px">
+              <div slot="header" class="clearfix">
+                <span>SpringBoot + Vue Management System</span>
               </div>
-            </div>
-          </el-card>
+              <div>
+                Start to do Management System
+                <div style="margin-top: 20px">
+                  <div style="margin: 10px 0"><strong>theme color</strong></div>
+                  <el-button type="primary">button</el-button>
+                  <el-button type="success">button</el-button>
+                  <el-button type="warning">button</el-button>
+                  <el-button type="danger">button</el-button>
+                  <el-button type="info">button</el-button>
+                </div>
+              </div>
+            </el-card>
+
+            <el-card style="width: 50%">
+              <div slot="header" class="clearfix">
+                <span>render user's data</span>
+              </div>
+
+              <div>
+                <el-table :data="users">
+                  <el-table-column label="ID" prop="id"></el-table-column>
+                  <el-table-column label="username" prop="username"></el-table-column>
+                  <el-table-column label="name" prop="name"></el-table-column>
+                  <el-table-column label="address" prop="address"></el-table-column>
+                </el-table>
+              </div>
+            </el-card>
+          </div>
         </el-main>
       </el-container>
     </el-container>
@@ -93,22 +109,35 @@
 </template>
 
 <script>
+import axios from "axios";
+import request from "@/utils/request";
+
 export default {
   name: 'HomeView',
-  data(){
+  data() {
     return {
       isCollapse: false,
       asideWidth: '200px',
-      collapseIcon: 'el-icon-s-fold'
+      collapseIcon: 'el-icon-s-fold',
+      users:[]
     }
   },
-  methods:{
-    handleCollapse(){
+  mounted(){ //after loaded, then triggered
+    // axios.get('http://localhost:9090/user/selectAll').then(res => {
+    //  // console.log(res.data);
+    //   this.users = res.data.data;
+    // })
+    request.get("/user/selectAll").then(res => {
+      this.users = res.data
+    });
+  },
+  methods: {
+    handleCollapse() {
       this.isCollapse = !this.isCollapse
       this.asideWidth = this.isCollapse ? '64px' : '200px'
       this.collapseIcon = this.isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'
     },
-    handleFull(){
+    handleFull() {
       document.documentElement.requestFullscreen()
     }
   }
@@ -116,56 +145,69 @@ export default {
 </script>
 
 <style>
-.el-menu--inline{
+.el-menu--inline {
   background-color: #000c17 !important;
 }
-.el-menu--inline .el-menu-item{
+
+.el-menu--inline .el-menu-item {
   background-color: #000c17 !important;
   padding-left: 49px !important;
 }
-.el-menu-item:hover, .el-submenu__title:hover{
+
+.el-menu-item:hover, .el-submenu__title:hover {
   color: #fff !important;
 }
-.el-submenu__title:hover i{
+
+.el-submenu__title:hover i {
   color: #fff !important;
 }
-.el-menu-item.is-active{
+
+.el-menu-item.is-active {
   background-color: #1890ff !important;
   border-radius: 5px !important;
   width: calc(100% - 8px);
   margin-left: 4px;
 }
-.el-menu-item.is-active i, .el-menu-item.is-active .el-tooltip{
+
+.el-menu-item.is-active i, .el-menu-item.is-active .el-tooltip {
   margin-left: -4px;
 }
-.el-menu-item{
+
+.el-menu-item {
   height: 40px !important;
   line-height: 40px !important;
 }
-.el-submenu__title{
+
+.el-submenu__title {
   height: 40px !important;
   line-height: 40px !important;
 }
+
 .el-submenu__icon-arrow {
   margin-top: -5px;
 }
-.el-submenu .el-menu-item{
+
+.el-submenu .el-menu-item {
   min-width: 0px !important;
 }
-.el-menu--inline .el-menu-item.is-active{
+
+.el-menu--inline .el-menu-item.is-active {
   padding-left: 45px !important;
 }
-.el-aside{
+
+.el-aside {
   transition: width .3s;
-  box-shadow: 2px 0 6px rgba(0,21,41,.35);
+  box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
 }
-.logo-title{
+
+.logo-title {
   margin-left: 5px;
   font-size: 20px;
   transition: all .3s;
 }
-.el-header{
-  box-shadow: 2px 0 6px rgba(0,21,41,.35);
+
+.el-header {
+  box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
   display: flex;
   align-items: center;
 }
