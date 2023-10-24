@@ -2,12 +2,13 @@
   <div style="height: 100vh; display: flex; align-items: center; justify-content: center; background-color: #0f9876">
     <div style="display: flex; background-color: white; width: 50%; border-radius: 5px; overflow: hidden">
       <div style="flex: 1">
-        <img src="@/assets/login.png" alt="login" style="width: 100%">
+        <img src="@/assets/register.png" alt="login" style="width: 100%">
       </div>
 
       <div style="flex: 1; display: flex; align-items: center; justify-content: center">
         <el-form :model="user" :rules="rules" style="width: 80%" ref="loginRef">
-          <div style="font-size: 20px; font-weight: bold; text-align: center; margin-bottom: 20px">Welcome to Log In Page
+          <div style="font-size: 20px; font-weight: bold; text-align: center; margin-bottom: 20px">Welcome to Management
+            System
           </div>
           <el-form-item prop="username">
             <el-input prefix-icon="el-icon-user" size="medium" placeholder="please input username"
@@ -49,7 +50,7 @@
 import ValidCode from "@/components/ValidCode.vue";
 
 export default {
-  name: "Login",
+  name: "Register",
   components: {
     ValidCode
   },

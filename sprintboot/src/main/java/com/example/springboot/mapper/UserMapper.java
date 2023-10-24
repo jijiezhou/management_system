@@ -50,4 +50,7 @@ public interface UserMapper {
 
     @Select("select count(id) from `user` where username like concat('%', #{username}, '%') and name like concat('%', #{name}, '%') order by id desc")
     Integer selectCountByPage(@Param("username") String username, @Param("name") String name);
+
+    @Select("select * from `user` where username = #{username} order by id desc")
+    User selectByUsername(String username);
 }

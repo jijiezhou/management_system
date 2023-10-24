@@ -1,9 +1,12 @@
 package com.example.springboot.controller;
 
+import cn.hutool.core.util.StrUtil;
+import com.example.springboot.entity.User;
+import com.example.springboot.service.UserService;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 import com.example.springboot.common.Result;
 
-import java.util.List;
 
 /**
  * @Classname WebController
@@ -12,31 +15,21 @@ import java.util.List;
  * @Date 10/22/23 6:40 PM
  */
 @RestController
-@RequestMapping("/web")
 public class WebController {
-    @GetMapping("/hello")
-    public Result hello(String name){
-        return Result.success(name);
+    @Resource
+    UserService userService;
+
+    @GetMapping("/")
+    public Result hello(){
+        return Result.success("success");
     }
 
-    @PostMapping("/post") //http://localhost:9090/web/post?name=jijiez need url params
-    public Result post(@RequestBody Obj obj){
-        System.out.println(obj.getName() == null ? "null" : obj.getName().isEmpty());
-        return Result.success(obj);
-    }
-
-    @PutMapping("/put")
-    public Result put(@RequestBody Obj obj){
-        return Result.success(obj);
-    }
-
-    @DeleteMapping("/delete/{id}") //http://localhost:9090/web/delete/1 => /1 -> /{id}
-    public Result delete(@PathVariable Integer id){
-        return Result.success(id);
-    }
-
-    @DeleteMapping("/delete")
-    public Result delete(@RequestBody List<Integer> ids){
-        return Result.success(ids);
+    @PostMapping("/login")
+    public Result login(@RequestBody User user){
+        if (StrUtil.isBlank(user.getUsername()) || StrUtil.isBlank(user.getPassword())){
+            return Result.error("Invalid Input");
+        }
+        user = userService.login(user);
+        return Result.success(user);
     }
 }

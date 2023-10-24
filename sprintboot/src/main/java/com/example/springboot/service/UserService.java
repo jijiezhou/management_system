@@ -3,13 +3,16 @@ package com.example.springboot.service;
 import com.example.springboot.common.Page;
 import com.example.springboot.common.Result;
 import com.example.springboot.entity.User;
+import com.example.springboot.exception.ServiceException;
 import com.example.springboot.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.rmi.server.ServerCloneException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @Classname UserService
@@ -70,5 +73,20 @@ public class UserService {
         page.setList(userList);
         page.setTotal(total);
         return page;
+    }
+
+    //Validify user account is work: by username
+    public User login(User user) {
+        //username select
+        User dbUser = userMapper.selectByUsername(user.getUsername());
+        if (dbUser == null){
+            //throw defined exception
+            throw new ServiceException("username or password incorrect");
+        }
+        //user.getPassword in first, because we already check in the front end
+        if(!user.getPassword().equals(dbUser.getPassword())){
+            throw new ServiceException("username or password incorrect");
+        }
+        return dbUser;
     }
 }
