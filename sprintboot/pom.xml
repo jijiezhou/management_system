@@ -71,6 +71,13 @@
 			<version>4.0.1</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- tomcat -->
+		<dependency>
+			<groupId>org.apache.tomcat.maven</groupId>
+			<artifactId>tomcat-maven-plugin</artifactId>
+			<version>9.0.82</version>
+			<type>pom</type>
+		</dependency>
 	</dependencies>
 
 	<build>
