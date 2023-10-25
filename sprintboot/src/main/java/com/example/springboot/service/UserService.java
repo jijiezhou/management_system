@@ -1,5 +1,6 @@
 package com.example.springboot.service;
 
+import cn.hutool.core.util.RandomUtil;
 import com.example.springboot.common.Page;
 import com.example.springboot.common.Result;
 import com.example.springboot.entity.User;
@@ -9,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.rmi.server.ServerCloneException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @Classname UserService
@@ -88,5 +86,16 @@ public class UserService {
             throw new ServiceException("username or password incorrect");
         }
         return dbUser;
+    }
+
+    public User register(User user) {
+        User dbUser = userMapper.selectByUsername(user.getUsername());
+        if (dbUser != null){
+            //throw defined exception
+            throw new ServiceException("username already exists!");
+        }
+        user.setName(user.getUsername());
+        userMapper.insert(user);
+        return user;
     }
 }

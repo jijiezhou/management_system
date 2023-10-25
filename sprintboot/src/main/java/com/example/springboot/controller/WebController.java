@@ -32,4 +32,16 @@ public class WebController {
         user = userService.login(user);
         return Result.success(user);
     }
+
+    @PostMapping("/register")
+    public Result register(@RequestBody User user){
+        if (StrUtil.isBlank(user.getUsername()) || StrUtil.isBlank(user.getPassword())){
+            return Result.error("Invalid Input");
+        }
+        if (user.getUsername().length() > 10 || user.getPassword().length() > 20){
+            return Result.error("Invalid Input");
+        }
+        user = userService.register(user);
+        return Result.success(user);
+    }
 }

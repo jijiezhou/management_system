@@ -33,7 +33,7 @@
 
           <div style="display: flex">
             <div style="flex: 1">Not Registered?<span
-                style="color: #0f9876; cursor: pointer; margin-left: 4px">Sign Up</span></div>
+                style="color: #0f9876; cursor: pointer; margin-left: 4px" @click="$router.push('/register')">Sign Up</span></div>
             <div style="flex: 1; text-align: right"><span style="color: #0f9876; cursor: pointer">Forget Password</span>
             </div>
           </div>
